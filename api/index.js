@@ -5,6 +5,12 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://globalultrasonido.cl'); 
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 app.post('/proxy-cliengo', async (req, res) => {
     const cliengoApiUrl = 'https://api.cliengo.com/1.0/contacts?api_key=84e5000d-8828-4d0c-b22b-547f95c258c4';
 
