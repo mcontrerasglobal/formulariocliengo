@@ -2,9 +2,6 @@
   "repository": "https://github.com/mcontrerasglobal/formulariocliengo.git",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "start": "node api/index.js" 
-  },
   "dependencies": {
     "express": "^4.18.2",      
     "node-fetch": "^2.6.9" 
