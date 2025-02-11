@@ -1,17 +1,19 @@
-const express = require('express');
 const fetch = require('node-fetch');
 
-const app = express();
+module.exports = async (req, res) => {
+    
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-app.use(express.json());
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://globalultrasonido.cl'); 
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Método no permitido' });
+    }
 
-app.post('/proxy-cliengo', async (req, res) => {
     const cliengoApiUrl = 'https://api.cliengo.com/1.0/contacts?api_key=84e5000d-8828-4d0c-b22b-547f95c258c4';
 
     try {
@@ -26,12 +28,10 @@ app.post('/proxy-cliengo', async (req, res) => {
         if (!response.ok) {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
-
         const data = await response.json();
-        res.send(data);
+        res.status(200).json(data);
     } catch (error) {
-        
         console.error('Error al enviar datos a Cliengo:', error.message);
-        res.status(500).send({ error: 'Error al enviar datos a Cliengo' });
+        res.status(500).json({ error: 'Error al enviar datos a Cliengo' });
     }
-});
+};
