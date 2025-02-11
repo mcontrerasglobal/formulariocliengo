@@ -1,19 +1,11 @@
+const express = require('express');
 const fetch = require('node-fetch');
 
-module.exports = async (req, res) => {
-    
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+const app = express();
 
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
+app.use(express.json());
 
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Método no permitido' });
-    }
-
+app.post('/proxy-cliengo', async (req, res) => {
     const cliengoApiUrl = 'https://api.cliengo.com/1.0/contacts?api_key=84e5000d-8828-4d0c-b22b-547f95c258c4';
 
     try {
@@ -28,10 +20,14 @@ module.exports = async (req, res) => {
         if (!response.ok) {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
+
         const data = await response.json();
-        res.status(200).json(data);
+        res.send(data);
     } catch (error) {
+       
         console.error('Error al enviar datos a Cliengo:', error.message);
-        res.status(500).json({ error: 'Error al enviar datos a Cliengo' });
+        res.status(500).send({ error: 'Error al enviar datos a Cliengo' });
     }
-};
+});
+
+module.exports = app;
