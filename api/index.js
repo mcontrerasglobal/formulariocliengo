@@ -1,6 +1,6 @@
 module.exports = async (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', 'https://globalultrasonido.cl/products/ecografo-samsung-hs30');
+    res.setHeader('Access-Control-Allow-Origin', 'wwww.globalultrasonido.cl');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
