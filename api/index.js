@@ -1,14 +1,16 @@
-const fetch = require('node-fetch');
-
 module.exports = async (req, res) => {
-    
+
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
-        
+
         return res.status(200).end();
+    }
+
+    if (req.method === 'GET') {
+        return res.status(200).json({ message: 'Endpoint funcionando correctamente' });
     }
 
     if (req.method !== 'POST') {
@@ -18,7 +20,6 @@ module.exports = async (req, res) => {
     const cliengoApiUrl = 'https://api.cliengo.com/1.0/contacts?api_key=84e5000d-8828-4d0c-b22b-547f95c258c4';
 
     try {
-        
         const response = await fetch(cliengoApiUrl, {
             method: 'POST',
             headers: {
