@@ -1,6 +1,17 @@
-module.exports = async (req, res) => {
+const fetch = require('node-fetch');
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
+module.exports = async (req, res) => {
+    
+    const allowedOrigins = ['https://globalultrasonido.cl', 'https://www.globalultrasonido.cl'];
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+
+        console.warn(`CORS: Origen no permitido: ${origin}`);
+    }
+
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
